@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventones - Ride Details</title>
+    <link rel="stylesheet" href="7_style_ride_details.css">
+</head>
+<body>
+<div class="wrapper">
+    <header class="main-header">
+      <img src="img/LogoAventones.png" alt="Logo Aventones" class="logo-header" />
+      <div class="header-box">
+        <div class="header-content">
+          <nav class="nav-bar">
+            <a href="Home_Main.html">Home</a>
+            <a href="Rides_Main.html"class="active">Rides</a>
+            <a href="Bookings.html">Bookings</a>
+          </nav>
+          <div class="search-user">
+            <input type="text" placeholder="Search..." class="search-bar" />
+            <div class="user-dropdown">
+              <label tabindex="0">
+                <img src="img/LogoPersona.png" alt="User Icon" class="user-icon" />
+              </label>
+              <div class="dropdown-menu">
+                <a href="index.html">Logout</a>
+                <a href="Edit_Profile.html">Profile</a>
+                <a href="Configuration.html">Settings</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="content-body">
+        <h2 class="title">Ride Details</h2>
+        <div class="driver-image" style="text-align:center; margin:10px 0;">
+          <img src="img/LogoPersona.png" alt="Driver" style="width:80px; height:80px; border-radius:50%;">
+        </div>
+        <hr class="divider" />
+
+        <form class="ride-form">
+          <div class="form-row">
+            <div class="input-group">
+              <label for="departure">Departure from</label>
+              <input id="departure" type="text"/>
+            </div>
+            <div class="input-group">
+              <label for="arrive">Arrive To</label>
+              <input id="arrive" type="text"/>
+            </div>
+          </div>
+
+          <div class="form-row column">
+            <div class="input-group full-width">
+              <label for="days">Days</label>
+              <div class="checkbox-group">
+                <label><input type="checkbox" /> Mon</label>
+                <label><input type="checkbox" /> Tue</label>
+                <label><input type="checkbox" /> Wed</label>
+                <label><input type="checkbox" /> Thu</label>
+                <label><input type="checkbox" /> Fri</label>
+                <label><input type="checkbox" /> Sat</label>
+                <label><input type="checkbox" /> Sun</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="input-group">
+              <label for="time">Time</label>
+              <select id="time">
+                <option>10:00 am</option>
+                <option>11:00 am</option>
+                <option>12:00 pm</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="seats">Seats</label>
+              <input id="seats" type="number"/>
+            </div>
+            <div class="input-group">
+              <label for="fee">Fee</label>
+              <input id="fee" type="number"/>
+            </div>
+          </div>
+
+          <fieldset class="vehicle-details">
+            <legend>Vehicle Details</legend>
+            <div class="form-row">
+              <div class="input-group">
+                <label for="make">Make</label>
+                <select id="make">
+                  <option>Nissan</option>
+                  <option>Toyota</option>
+                  <option>Honda</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label for="model">Model</label>
+                <input id="model" type="text"/>
+              </div>
+              <div class="input-group">
+                <label for="year">Year</label>
+                <input id="year" type="number"/>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="form-buttons">
+            <a href="Rides_Main.html" class="cancel-link">Cancel</a>
+            <button type="button" class="btn-create" id="btnCreate">Request</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-nav">
+        <a href="Home_Main.html">Home</a> |
+        <a href="Rides_Main.html">Rides</a> |
+        <a href="Bookings.html">Bookings</a> |
+        <a href="Configuration.html">Settings</a> |
+        <a href="index.html">Login</a> |
+        <a href="Create_Account.html">Register</a>
+        <p><strong><br>&copy;</strong> Aventones.com</p>
+      </div>
+    </footer>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const ride = JSON.parse(localStorage.getItem("selectedRide"));
+  if (!ride) return;
+
+  // Cargar info en inputs
+  document.getElementById("departure").value = ride.departure;
+  document.getElementById("arrive").value = ride.arrive;
+  document.getElementById("seats").value = ride.seats;
+  document.getElementById("fee").value = ride.fee;
+  document.getElementById("time").value = ride.time;
+  document.getElementById("make").value = ride.vehicle.make;
+  document.getElementById("model").value = ride.vehicle.model;
+  document.getElementById("year").value = ride.vehicle.year;
+
+  // Días seleccionados
+  document.querySelectorAll(".checkbox-group input[type='checkbox']").forEach((chk, i) => {
+    chk.checked = ride.days.includes(chk.parentElement.textContent.trim());
+  });
+
+  // Guardar cambios
+  document.getElementById("btnCreate").addEventListener("click", () => {
+    const updatedRide = {
+      ...ride,
+      departure: document.getElementById("departure").value.trim(),
+      arrive: document.getElementById("arrive").value.trim(),
+      seats: parseInt(document.getElementById("seats").value),
+      fee: parseFloat(document.getElementById("fee").value),
+      time: document.getElementById("time").value,
+      vehicle: {
+        make: document.getElementById("make").value,
+        model: document.getElementById("model").value.trim(),
+        year: parseInt(document.getElementById("year").value)
+      },
+      days: Array.from(document.querySelectorAll(".checkbox-group input[type='checkbox']"))
+                .filter(chk => chk.checked)
+                .map(chk => chk.parentElement.textContent.trim())
+    };
+    localStorage.setItem("selectedRide", JSON.stringify(updatedRide));
+    alert("Ride updated!");
+  });
+});
+</script>
+
+</body>
+</html>

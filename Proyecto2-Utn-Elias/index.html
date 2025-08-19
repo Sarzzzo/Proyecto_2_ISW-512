@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aventones - Login</title>
+  <link rel="stylesheet" href="1_style_login.css" />
+</head>
+<body>
+  <div class="General">
+    <section>
+      <div class="imagen_logo">
+        <img src="img/LogoAventones.png" alt="LogoPrincipal" height="80" />
+      </div>
+
+      <div id="Container1">
+        <img src="img/SignInWithGoogle.png" alt="SignIn" height="40" id="imagengoogle" />
+        <strong><br />Or</strong>
+
+        <form id="login_form" action="#" method="post" class="formulario-login">
+          <div class="campo">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required />
+          </div>
+
+          <div class="campo">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+
+          <p>Not an user? <a href="Create_Account.html">Register Now</a></p>
+
+          <button type="submit" class="btn-login">Login</button>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-nav">
+        <a href="Home_Main.html">Home</a> |
+        <a href="Rides_Main.html">Rides</a> |
+        <a href="Bookings.html">Bookings</a> |
+        <a href="Configuration.html">Settings</a> |
+        <a href="index.html">Login</a> |
+        <a href="Create_Account.html">Register</a>
+        <p><strong><br />&copy;</strong> Aventones.com</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Enlace al script de login -->
+  <script src="login.js"></script>
+</body>
+</html>

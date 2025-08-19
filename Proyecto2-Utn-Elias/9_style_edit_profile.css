@@ -1,0 +1,267 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  background-color: #fff;
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.divider {
+  width: 140px;
+  margin: 0 auto 20px;
+  border: 0;
+  border-top: 1px solid #aaa;
+}
+
+.container {
+  flex: 1;
+  text-align: center;
+  height: 80%;
+  border-bottom: 1px solid #aaa;
+}
+.content-body {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.main-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+  background-color: #fff;
+}
+
+.logo-header {
+  width: 300px;
+  margin-bottom: 8px;
+}
+
+.header-box {
+  background-color: rgb(237, 233, 233);  
+  width: 70%;
+}
+
+.header-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 56px;
+}
+
+.nav-bar {
+  display: flex;
+  width: 92%;
+}
+
+.nav-bar a {
+  display: block;
+  line-height: 56px;
+  padding: 0 20px;  
+  text-decoration: none;
+  color: #777;
+  font-weight: normal;
+  font-size: 16px;
+  background-color: transparent;
+  border-radius: 0;
+  margin: 0;
+  border: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap; 
+}
+
+.nav-bar a.active,
+.nav-bar a:hover {
+  background-color: #1a73e8;
+  color: white;
+  font-weight: bold;
+}
+
+.nav-bar a + a {
+  margin-left: 0;
+}
+
+.search-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-bar {
+  padding: 8px 14px;
+  font-size: 15px;
+  border: 1px solid #000;
+  width: 200px;
+  border-radius: 5px;
+}
+
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.user-dropdown label {
+  cursor: pointer;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  min-width: 160px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.user-dropdown:hover .dropdown-menu,
+.user-dropdown:focus-within .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #000;
+  border-bottom: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.formulario-register {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+}
+
+.fila-doble {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.fila-doble .campo {
+    flex: 1;
+    min-width: 200px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.campo label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #222;
+}
+
+section {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px 40px;
+    text-align: center;
+}
+
+.campo input,
+.campo select {
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    font-size: 14px;
+}
+.title {
+  font-size: 32px;
+  font-weight: 200;
+  margin: 20px 0 10px;
+  color: #777;
+}
+
+.divider {
+  width: 140px;
+  margin: 0 auto 20px;
+  border: 0;
+  border-top: 1px solid #aaa;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 25px 10px;
+  background-color: #ffffff;
+  font-size: 14px;
+  color: #9b9999;
+  border-top: 1px solid #ccc;
+}
+
+.footer-nav {
+  margin-bottom: 8px;
+  padding: 10px;
+}
+
+.footer-nav a {
+  color: #838383;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer-nav a:hover {
+  text-decoration: underline;
+}
+
+.footer-copy {
+  color: #666666;
+  font-size: 14px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 70px;
+  margin-bottom: 45px;
+}
+
+.cancel-link {
+  text-decoration: underline;
+  color: #1a73e8;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-create {
+  padding: 10px 30px;
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  font-size: 15px;
+  cursor: pointer;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aventones - Rides Main</title>
+  <link rel="stylesheet" href="4_style_rides_main.css" />
+</head>
+<script src="rides_main.js"></script>
+
+<body>
+  <div class="wrapper">
+    <header class="main-header">
+      <img src="img/LogoAventones.png" alt="Logo Aventones" class="logo-header" />
+      <div class="header-box">
+        <div class="header-content">
+          <nav class="nav-bar">
+            <a href="Home_Main.html">Home</a>
+            <a href="Rides_Main.html" class="active">Rides</a>
+            <a href="Bookings.html">Bookings</a>
+          </nav>
+          <div class="search-user">
+            <input type="text" placeholder="Search..." class="search-bar" />
+            <div class="user-dropdown">
+              <label tabindex="0">
+                <img src="img/LogoPersona.png" alt="User Icon" class="user-icon" />
+              </label>
+              <div class="dropdown-menu">
+                <a href="index.html">Logout</a>
+                <a href="Edit_Profile.html">Profile</a>
+                <a href="Configuration.html">Settings</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="content-body">
+        <h2 class="title">My rides</h2>
+        <hr class="divider" />
+        <div class="btn-container">
+          <button type="button" class="btn-login" onclick="location.href='New_Rides.html'">New Ride</button>
+        </div>
+
+        <table class="rides-table">
+          <thead>
+            <tr>
+              <th>From</th>
+              <th>To</th>
+              <th>Seats</th>
+              <th>Car</th>
+              <th>Fee</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="ridesTableBody">
+            <!-- Aquí se cargarán los rides desde localStorage -->
+          </tbody>
+        </table>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <nav class="footer-nav">
+        <a href="Home_Main.html">Home</a> |
+        <a href="Rides_Main.html">Rides</a> |
+        <a href="Bookings.html">Bookings</a> |
+        <a href="Configuration.html">Settings</a> |
+        <a href="index.html">Login</a> |
+        <a href="Create_Account.html">Register</a>
+      </nav>
+      <p class="footer-copy">© Aventones.com</p>
+    </footer>
+  </div>
+
+  <!-- Script que llena la tabla -->
+  <script src="rides_main.js"></script>
+</body>
+</html>

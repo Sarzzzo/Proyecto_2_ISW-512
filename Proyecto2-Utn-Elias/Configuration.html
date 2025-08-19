@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aventones - Configuration</title>
+  <link rel="stylesheet" href="10_style_configuration.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <header class="main-header">
+      <img src="img/LogoAventones.png" alt="Logo Aventones" class="logo-header" />
+      <div class="header-box">
+        <div class="header-content">
+          <nav class="nav-bar">
+            <a href="Home_Main.html" class="active">Home</a>
+            <a href="Rides_Main.html">Rides</a>
+            <a href="Bookings.html">Bookings</a>
+          </nav>
+          <div class="search-user">
+            <input type="text" placeholder="Search..." class="search-bar" />
+            <div class="user-dropdown">
+              <label tabindex="0">
+                <img src="img/LogoPersona.png" alt="User Icon" class="user-icon" />
+              </label>
+              <div class="dropdown-menu">
+                <a href="index.html">Logout</a>
+                <a href="Edit_Profile.html">Profile</a>
+                <a href="Configuration.html">Settings</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="content-body">
+        <h2 class="title">Configuration</h2>
+        <hr class="divider" />
+        <form class="config-form" id="configForm">
+          <div class="form-group">
+            <label for="publicName">Public Name</label>
+            <input type="text" id="publicName" class="half-width">
+          </div>
+          <div class="form-group">
+            <label for="publicBio">Public Bio</label>
+            <textarea id="publicBio" rows="6"></textarea>
+          </div>
+
+          <div class="form-buttons">
+            <a href="Rides_Main.html" class="cancel-link">Cancel</a>
+            <button type="submit" class="btn-create">Save</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-nav">
+          <a href="Home_Main.html">Home</a> |
+          <a href="Rides_Main.html">Rides</a> |
+          <a href="Bookings.html">Bookings</a> |
+          <a href="Configuration.html">Settings</a> |
+          <a href="index.html">Login</a> |
+          <a href="Create_Account.html">Register</a>
+          <p><strong><br>&copy;</strong> Aventones.com</p>
+      </div>
+    </footer>
+  </div>
+  <script src="configuration.js"></script>
+</body>
+</html>
