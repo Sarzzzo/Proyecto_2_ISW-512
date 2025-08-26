@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let rides = JSON.parse(localStorage.getItem("rides")) || [];
 
-  // Llenar selects con lugares únicos
   const fromPlaces = [...new Set(rides.map(r => r.departure))];
   const toPlaces = [...new Set(rides.map(r => r.arrive))];
 
@@ -42,6 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     ridesArray.forEach(ride => {
       const vehicle = ride.vehicle || { make: "", model: "", year: "" };
+      const driverName = ride.driver
+        ? `${ride.driver.firstName} ${ride.driver.lastName}`
+        : "Driver";
+
       const row = document.createElement("tr");
       row.dataset.days = JSON.stringify(ride.days || []);
       row.dataset.time = ride.time || "";
@@ -49,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
       row.innerHTML = `
         <td class="driver-cell">
           <img src="img/LogoPersona.png" class="user-icon-small" alt="User Icon"> 
-          ${ride.driverName || "Driver"}
+          ${driverName}
         </td>
         <td>${ride.departure}</td>
         <td>${ride.arrive}</td>
@@ -105,4 +108,36 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "Ride_Details.html";
     }
   });
+
+  renderRides(rides);
 });
+document.addEventListener("DOMContentLoaded", function () {
+  checkUserRole();
+});
+
+function checkUserRole() {
+  const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+
+  if (!loggedUser) {
+    console.warn("No user logged in.");
+    return;
+  }
+
+  // Header: ocultar botón Rides
+  const ridesButton = document.querySelector('a[href="Rides_Main.html"]');
+  if (loggedUser.role === false && ridesButton) {
+    ridesButton.style.display = "none"; 
+    ridesButton.setAttribute("disabled", "true"); 
+  }
+
+  // Footer: ocultar solo el link Rides
+  const footerRidesLink = document.querySelector('footer .footer-nav a[href="Rides_Main.html"]');
+  if (loggedUser.role === false && footerRidesLink) {
+    // Oculta el link y también el separador "|" que sigue
+    const nextSibling = footerRidesLink.nextSibling;
+    if (nextSibling && nextSibling.nodeType === Node.TEXT_NODE && nextSibling.textContent.includes("|")) {
+      nextSibling.textContent = ""; // elimina la barra vertical
+    }
+    footerRidesLink.style.display = "none";
+  }
+}

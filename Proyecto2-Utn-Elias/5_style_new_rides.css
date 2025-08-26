@@ -258,3 +258,50 @@ html, body {
   color: #666666;
   font-size: 14px;
 }
+/* =======================================
+   Media Queries mínimas solo para responsivo
+======================================= */
+
+/* iPad Pro */
+@media (max-width: 1024px) {
+  .header-box {
+    width: 90%;
+  }
+  .logo-header {
+    width: 220px;
+  }
+  .search-bar {
+    width: 150px;
+  }
+  .form-row {
+    flex-wrap: wrap;
+  }
+  .rides-table {
+    font-size: 14px;
+  }
+}
+
+/* iPhone 14 */
+@media (max-width: 430px) {
+  .logo-header {
+    width: 180px;
+  }
+  .search-bar {
+    width: 120px;
+  }
+  .nav-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .form-row {
+    flex-direction: column;
+  }
+  .checkbox-group {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .rides-table {
+    font-size: 12px;
+  }
+}

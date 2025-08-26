@@ -63,3 +63,33 @@ function storeInputs() {
   alert('Registration successful, welcome!');
   document.getElementById('registration_form').reset();
 }
+document.addEventListener("DOMContentLoaded", function () {
+  checkUserRole();
+});
+
+function checkUserRole() {
+  const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+
+  if (!loggedUser) {
+    console.warn("No user logged in.");
+    return;
+  }
+
+  // Header: ocultar botón Rides
+  const ridesButton = document.querySelector('a[href="Rides_Main.html"]');
+  if (loggedUser.role === false && ridesButton) {
+    ridesButton.style.display = "none"; 
+    ridesButton.setAttribute("disabled", "true"); 
+  }
+
+  // Footer: ocultar solo el link Rides
+  const footerRidesLink = document.querySelector('footer .footer-nav a[href="Rides_Main.html"]');
+  if (loggedUser.role === false && footerRidesLink) {
+    // Oculta el link y también el separador "|" que sigue
+    const nextSibling = footerRidesLink.nextSibling;
+    if (nextSibling && nextSibling.nodeType === Node.TEXT_NODE && nextSibling.textContent.includes("|")) {
+      nextSibling.textContent = ""; // elimina la barra vertical
+    }
+    footerRidesLink.style.display = "none";
+  }
+}

@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Rellenar los campos comunes
   document.getElementById("firstName").value = loggedUser.firstName || "";
   document.getElementById("lastName").value = loggedUser.lastName || "";
   document.getElementById("email").value = loggedUser.email || "";
@@ -22,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("city").value = loggedUser.city || "";
   document.getElementById("phone").value = loggedUser.phone || "";
 
-  // Si es driver, mostrar campos adicionales
   if (loggedUser.role === true) {
     driverFieldsContainer.innerHTML = `
       <div class="fila-doble">
@@ -47,14 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
-    // Rellenar datos existentes
     document.getElementById("brand").value = loggedUser.brand || "";
     document.getElementById("model").value = loggedUser.model || "";
     document.getElementById("year").value = loggedUser.year || "";
     document.getElementById("plate").value = loggedUser.plate || "";
   }
 
-  // Guardar cambios al dar submit
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -75,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
       loggedUser.plate = document.getElementById("plate").value.trim();
     }
 
-    // Actualizar en su array correspondiente
     let users = JSON.parse(localStorage.getItem("users")) || [];
     let drivers = JSON.parse(localStorage.getItem("drivers")) || [];
 
@@ -88,11 +83,39 @@ document.addEventListener("DOMContentLoaded", () => {
       if (idx !== -1) users[idx] = loggedUser;
       localStorage.setItem("users", JSON.stringify(users));
     }
-
-    // Actualizar sesión
     localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
 
     alert("Profile updated successfully!");
     window.location.href = "Home_Main.html";
   });
 });
+document.addEventListener("DOMContentLoaded", function () {
+  checkUserRole();
+});
+
+function checkUserRole() {
+  const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+
+  if (!loggedUser) {
+    console.warn("No user logged in.");
+    return;
+  }
+
+  // Header: ocultar botón Rides
+  const ridesButton = document.querySelector('a[href="Rides_Main.html"]');
+  if (loggedUser.role === false && ridesButton) {
+    ridesButton.style.display = "none"; 
+    ridesButton.setAttribute("disabled", "true"); 
+  }
+
+  // Footer: ocultar solo el link Rides
+  const footerRidesLink = document.querySelector('footer .footer-nav a[href="Rides_Main.html"]');
+  if (loggedUser.role === false && footerRidesLink) {
+    // Oculta el link y también el separador "|" que sigue
+    const nextSibling = footerRidesLink.nextSibling;
+    if (nextSibling && nextSibling.nodeType === Node.TEXT_NODE && nextSibling.textContent.includes("|")) {
+      nextSibling.textContent = ""; // elimina la barra vertical
+    }
+    footerRidesLink.style.display = "none";
+  }
+}

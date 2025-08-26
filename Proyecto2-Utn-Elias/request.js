@@ -1,72 +1,82 @@
 document.addEventListener("DOMContentLoaded", () => {
   const btnCreate = document.getElementById("btnCreate");
+  const ride = JSON.parse(localStorage.getItem("selectedRide"));
+  const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
 
-  // Verificar si hay un ride para editar
-  const editIndex = localStorage.getItem("editRideIndex");
-  let rides = JSON.parse(localStorage.getItem("rides")) || [];
+  if (!ride || !loggedUser) return;
 
-  if (editIndex !== null) {
-    // Cambiar texto del botón
-    btnCreate.textContent = "Save";
+  // Mostrar nombre del driver debajo de la imagen
+  const driverDisplay = document.getElementById("driverNameDisplay");
+  driverDisplay.textContent = ride.driverName || "Driver";
 
-    // Cargar datos en el formulario
-    const ride = rides[editIndex];
-    document.getElementById("driverName").value = ride.driverName || "";
-    document.getElementById("departure").value = ride.departure;
-    document.getElementById("arrive").value = ride.arrive;
-    document.getElementById("seats").value = ride.seats;
-    document.getElementById("fee").value = ride.fee;
-    document.getElementById("time").value = ride.time;
-    document.getElementById("make").value = ride.vehicle.make;
-    document.getElementById("model").value = ride.vehicle.model;
-    document.getElementById("year").value = ride.vehicle.year;
+  // Cargar info en inputs (solo visual)
+  const fields = ["departure", "arrive", "seats", "fee", "time", "make", "model", "year"];
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el.tagName === "SELECT") {
+      el.value = ride[id] || ride.vehicle[id] || "";
+      el.disabled = true; // no editable
+    } else {
+      el.value = ride[id] || ride.vehicle[id] || "";
+      el.readOnly = true; // no editable
+    }
+  });
 
-    // Días seleccionados
-    document.querySelectorAll(".checkbox-group input[type='checkbox']").forEach((chk) => {
-      chk.checked = ride.days.includes(chk.parentElement.textContent.trim());
-    });
-  }
+  // Días seleccionados (checkboxes)
+  document.querySelectorAll(".checkbox-group input[type='checkbox']").forEach(chk => {
+    chk.checked = ride.days.includes(chk.parentElement.textContent.trim());
+    chk.disabled = true; // no editable
+  });
 
+  // Click en "Request"
   btnCreate.addEventListener("click", () => {
-    const driverName = document.getElementById("driverName").value.trim();
-    const departure = document.getElementById("departure").value.trim();
-    const arrive = document.getElementById("arrive").value.trim();
-    const seats = document.getElementById("seats").value;
-    const fee = document.getElementById("fee").value;
-    const time = document.getElementById("time").value;
-    const make = document.getElementById("make").value;
-    const model = document.getElementById("model").value.trim();
-    const year = document.getElementById("year").value;
+    const rideRequests = JSON.parse(localStorage.getItem("rideRequests")) || [];
 
-    // Días seleccionados
-    const days = [];
-    document.querySelectorAll(".checkbox-group input[type='checkbox']").forEach((chk) => {
-      if (chk.checked) {
-        days.push(chk.parentElement.textContent.trim());
-      }
-    });
-
-    const newRide = {
-      driverName, // <-- Guardamos el nombre del conductor
-      departure,
-      arrive,
-      days,
-      time,
-      seats: parseInt(seats),
-      fee: parseFloat(fee),
-      vehicle: { make, model, year: parseInt(year) }
+    const request = {
+      driverName: ride.driverName,
+      driverEmail: ride.driverEmail || ride.driver?.email,
+      userName: loggedUser.firstName,
+      departure: ride.departure,
+      arrive: ride.arrive,
+      time: ride.time,
+      date: new Date().toISOString()
     };
 
-    if (editIndex !== null) {
-      // Modo edición
-      rides[editIndex] = newRide;
-      localStorage.removeItem("editRideIndex"); // limpiar índice
-    } else {
-      // Modo creación
-      rides.push(newRide);
-    }
+    rideRequests.push(request);
+    localStorage.setItem("rideRequests", JSON.stringify(rideRequests));
 
-    localStorage.setItem("rides", JSON.stringify(rides));
-    window.location.href = "Rides_Main.html";
+    alert(`Ride request sent to ${ride.driverName}!`);
+    window.location.href = "Home_Main.html";
   });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  checkUserRole();
+});
+
+function checkUserRole() {
+  const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+
+  if (!loggedUser) {
+    console.warn("No user logged in.");
+    return;
+  }
+
+  // Header: ocultar botón Rides
+  const ridesButton = document.querySelector('a[href="Rides_Main.html"]');
+  if (loggedUser.role === false && ridesButton) {
+    ridesButton.style.display = "none"; 
+    ridesButton.setAttribute("disabled", "true"); 
+  }
+
+  // Footer: ocultar solo el link Rides
+  const footerRidesLink = document.querySelector('footer .footer-nav a[href="Rides_Main.html"]');
+  if (loggedUser.role === false && footerRidesLink) {
+    // Oculta el link y también el separador "|" que sigue
+    const nextSibling = footerRidesLink.nextSibling;
+    if (nextSibling && nextSibling.nodeType === Node.TEXT_NODE && nextSibling.textContent.includes("|")) {
+      nextSibling.textContent = ""; // elimina la barra vertical
+    }
+    footerRidesLink.style.display = "none";
+  }
+}
